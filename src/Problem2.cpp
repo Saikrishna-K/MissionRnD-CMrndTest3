@@ -59,6 +59,7 @@ Difficulty : Medium +
 */
 #include <stdlib.h>
 #include <stdio.h>
+#include<stdbool.h>
 
 struct node_dll{
 	int data;
@@ -71,6 +72,86 @@ struct node{
 	struct node *right;
 };
 
+struct node_dll* temp = NULL;
+bool not_match = false;
+int bst_len = 0;
+
+
+void inorder1(struct node *root)
+{
+	if (root->left != NULL)		inorder1(root->left);
+
+	if (not_match == false){
+
+		if (root->data == temp->data)
+		{
+			temp = temp->next;
+		}
+
+		else
+		{
+			not_match = true;
+			return;
+		}
+
+	}
+
+	if (not_match == false)
+	if (root->right != NULL)	inorder1(root->right);
+
+
+
+}
+
+
+
+void  bst_length(struct node *root)
+{
+	if (root != NULL)
+	{
+		bst_len++;
+	}
+	if (root->left != NULL)		bst_length(root->left);
+
+	if (root->right != NULL)	bst_length(root->right);
+
+
+
+}
+
+
+
 int is_identical(struct node_dll *head, struct node *root){
-	return -1;
+
+	if (head == NULL || root == NULL)  return -1;
+
+	int dll_length = 0;
+	not_match = false;
+	bst_len = 0;
+	temp = head;
+
+	while (temp)
+	{
+		dll_length++;
+		temp = temp->next;
+	}
+
+	bst_length(root);
+
+	if (bst_len != dll_length)
+	{
+		return 0;
+	}
+
+
+	temp = head;
+	inorder1(root);
+
+	if (not_match == false)
+		return 1;
+
+	else return 0;
+
+
+
 }

@@ -51,6 +51,38 @@ struct node{
 };
 
 
-int get_missing_value(struct node *root,int n){
-    return -1;
+int sum = 0;
+
+
+
+void inorder(struct node *root)
+{
+	if (!root) return;
+
+	sum -= root->data;
+
+	if (root->left != NULL)		inorder(root->left);
+
+	if (root->right != NULL)	inorder(root->right);
+
+
+}
+
+
+
+int get_missing_value(struct node *root, int n){
+
+	if (root == NULL || n<1) return -1;
+
+	sum = 0;
+
+
+	for (int i = 1; i <= n; i++)
+	{
+		sum += i;
+	}
+	inorder(root);
+
+	return sum;
+
 }
